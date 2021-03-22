@@ -25,12 +25,35 @@ class SparsedList<T: Comparable> {
     }
     
     func set(x: Int, y: Int, z: Int, value: T){
+        let newNode = Node(x: x, y: y, z: z, value: value)
+        
         guard let root = rootNode else {
-            rootNode = Node(x: x, y: y, z: z, value: value)
+            rootNode = newNode
             return
         }
         
+        if newNode.isCoordinatesSmaller(than: root) {
+            newNode.nextNode = root
+            rootNode = newNode
+            
+            return
+        }
         
+        var node = root
+        while !newNode.isCoordinatesSmaller(than: node.nextNode ?? Node(x: Int.max, y: Int.max, z: Int.max, value: root.value)) {
+            guard let nextNode = node.nextNode else {
+                break
+            }
+            node = nextNode
+        }
+        
+        if newNode.x == node.x && newNode.y == node.y && newNode.z == node.z {
+            node.value = value
+            return
+        }
+        
+        newNode.nextNode = node.nextNode
+        node.nextNode = newNode
     }
     
     func sortNonEmpty() {

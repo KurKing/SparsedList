@@ -22,31 +22,20 @@ class Node<T: Comparable> {
         
         self.value = value
     }
-    
-    func isOnCorrectPlace(otherNode: Node<T>) -> Bool {
-        if self.value == otherNode.value {
+        
+    func isCoordinatesSmaller(than otherNode: Node<T>) -> Bool {
+
+        if x < otherNode.x {
             return true
         }
         
-        var smallerNode = self
-        var biggerNode = otherNode
-        
-        if smallerNode.value > biggerNode.value {
-            smallerNode = otherNode
-            biggerNode = self
-        }
-        
-        if biggerNode.x < smallerNode.x {
-            return true
-        }
-        
-        if biggerNode.x == smallerNode.x {
-            if biggerNode.y < smallerNode.y {
+        if x == otherNode.x {
+            if y < otherNode.y {
                 return true
             }
             
-            if biggerNode.y == smallerNode.y {
-                return biggerNode.z < smallerNode.z
+            if y == otherNode.y {
+                return z < otherNode.z
             }
         }
         
